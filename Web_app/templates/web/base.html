@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michi Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/estilos.css' %}">
+    
+    {% load pwa %}
+
+    {% progressive_web_app_meta %}
+
+
+
+</head>
+<body>
+
+    
+    <header id="header">
+        <img class="menu" src="{% static 'app/img/menuiconwhite.png' %}" alt="menu" id="menu">
+        <div class="contenedor_logo">
+            <img  class="logo"  src="{% static 'app/img/cat_logo.png' %}" alt="logo"><h1>Michi Store</h1> </img>
+        </div>
+
+        <div>
+            
+            <nav id="nav">
+                <ul>
+                    <li>
+                        <a href="{% url 'home' %}"> Inicio </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'contacto' %}">Contacto</a>
+                    </li>|
+                    <li><a href="{% url 'index' %}">Tienda</a></li>
+                    {% if user.is_authenticated  %}
+                    <li>
+                        <a href="{% url 'logout' %}">Cerrar sesion</a>
+                    </li>
+                    <li>
+                        <a href="#">@{{ user.username }}</a>
+                    </li>
+                    <li>
+                        {% for auth in backends.associated %}
+
+                        {% if auth.provider == 'facebook' %}
+                        <img src="{{ auth.extra_data.picture.data.url }}" alt="" width="50" height="50">
+                        {% endif %}
+
+                        {% endfor %}
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{% url 'login' %}">Iniciar sesion</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'registro' %}">Registrate</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
+
+    <div id="contenido">   
+
+        {% block contenido %}
+
+
+        {% endblock %}
+
+
+    </div>
+
+
+    <footer>
+        <div class="marcas">
+            <img src="{% static 'app/img/footer/apple.png' %}" alt="apple">
+            <img src="{% static 'app/img/footer/lenovo.png' %}" alt="lenovo">
+            <img src="{% static 'app/img/footer/microsoft.png' %}" alt="microsoft">
+            <img src="{% static 'app/img/footer/samsung.png' %}" alt="samsung">
+            <img src="{% static 'app/img/footer/xiaomi.png' %}" alt="xiaomi">
+        </div>
+        <div class="logo_footer">
+            <img src="{% static 'app/img/tecnomarketpngicono.png' %}" alt="logo">
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="{% static 'app/js/menu.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+          $('.slider').bxSlider({
+              mode: 'fade',//horizontal, vertical, fade
+              auto: true,
+              pause: 2000
+          });
+        });
+    </script>
+
+</body>
+</html>

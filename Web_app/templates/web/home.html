@@ -1,0 +1,45 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block contenido %}
+<div id="contenido">
+
+    <div class="slider">
+        <div>
+            <img src="{% static 'app/img/banner/banner1.png' %}" alt="">
+        </div>
+        <div>
+            <img src="{% static 'app/img/banner/banner2.png' %}" alt="">
+        </div>
+        <div>
+            <img src="{% static 'app/img/banner/banner3.png' %}" alt="">
+        </div>
+    </div>
+
+
+    {% load humanize %}
+
+
+    
+<h2>Catalogo</h2>
+<div class="productos">
+    {% for l in libros %}
+    <div class="producto">
+        
+        <div class="contenedor_producto">
+            
+            {% if l.imagen %}
+            <img src="{{ l.imagen.url }}" alt="imagen producto">
+            {% endif %}
+            <div class="detalle">
+                <h5>{{ l.autor | capfirst }}</h5>
+                <h2>{{ l.nombre | title }}</h2>
+                <h3>${{ l.precio | intcomma}}</h3>
+                <h5>{{ l.fecha  }}</h5>
+                
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
